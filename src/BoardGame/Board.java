@@ -48,11 +48,24 @@ public class Board {
 
     //Colocar uma peça dada a posição
     public void placePiece(Piece piece, Position position) {
-        if(thereIsAPiece(position)){
+        if (thereIsAPiece(position)) {
             throw new BoardException("Já existe uma peça na posição " + position);
         }
         pieces[position.getRow()][position.getColumn()] = piece;
         piece.position = position; //peça não está mais na posição null e sim na posição passada por argumento
+    }
+
+    public Piece removePiece(Position position) {
+        if (!positionExists(position)) {
+            throw new BoardException("Posição não existe no tabuleiro!");
+        }
+        if (piece(position) == null) {
+            return null;
+        }
+        Piece aux = piece(position);
+        aux.position = null;
+        pieces[position.getRow()][position.getColumn()] = null;
+        return aux;
     }
 
     //verifica se a posição existe 
