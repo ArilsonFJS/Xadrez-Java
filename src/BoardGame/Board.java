@@ -33,7 +33,7 @@ public class Board {
     //Retorna a peça dada a linha e a coluna
     public Piece piece(int row, int column) {
         if (!positionExists(row, column)) {
-            throw new BoardException("Posição não existe no tabuleiro!");
+            throw new BoardException("Posicao nao existe no tabuleiro!");
         }
         return pieces[row][column];
     }
@@ -41,7 +41,7 @@ public class Board {
     //Retorna a posicao da peça
     public Piece piece(Position position) {
         if (!positionExists(position)) {
-            throw new BoardException("Posição não existe no tabuleiro!");
+            throw new BoardException("Posicao nao existe no tabuleiro!");
         }
         return pieces[position.getRow()][position.getColumn()];
     }
@@ -49,7 +49,7 @@ public class Board {
     //Colocar uma peça dada a posição
     public void placePiece(Piece piece, Position position) {
         if (thereIsAPiece(position)) {
-            throw new BoardException("Já existe uma peça na posição " + position);
+            throw new BoardException("Ja existe uma peca na posicao " + position);
         }
         pieces[position.getRow()][position.getColumn()] = piece;
         piece.position = position; //peça não está mais na posição null e sim na posição passada por argumento
@@ -57,7 +57,7 @@ public class Board {
 
     public Piece removePiece(Position position) {
         if (!positionExists(position)) {
-            throw new BoardException("Posição não existe no tabuleiro!");
+            throw new BoardException("Posicao nao existe no tabuleiro!");
         }
         if (piece(position) == null) {
             return null;
@@ -80,7 +80,7 @@ public class Board {
     //Verifica se a peça existe
     public boolean thereIsAPiece(Position position) {
         if (!positionExists(position)) {
-            throw new BoardException("Posição não existe no tabuleiro!");
+            throw new BoardException("Posicao nao existe no tabuleiro!");
         }
         return piece(position) != null;
     }
