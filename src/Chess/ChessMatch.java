@@ -5,6 +5,8 @@ import BoardGame.Piece;
 import BoardGame.Position;
 import Chess.pieces.King;
 import Chess.pieces.Rook;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,11 +16,14 @@ import Chess.pieces.Rook;
 public class ChessMatch {
 
     //Turno
-    private int turn; 
+    private int turn;
     //jogador atual
-    private Color currentPlayer; 
+    private Color currentPlayer;
     //Tabuleiro
     private Board board;
+
+    private List<Piece> piecesOnTheBoard = new ArrayList<>();
+    private List<Piece> capturedPieces = new ArrayList<>();
 
     //Quem tem que definir a dimensão de um tabuleiro é a partida de xadrez
     public ChessMatch() {
@@ -47,13 +52,13 @@ public class ChessMatch {
         }
         return mat;
     }
-    
-    public boolean[][] possibleMoves(ChessPosition SourcePosition){
+
+    public boolean[][] possibleMoves(ChessPosition SourcePosition) {
         Position position = SourcePosition.toPosition();
         validateSourcePosition(position);
         return board.piece(position).possibleMoves();
     }
-    
+
     //Executar movimento de xadrez
     public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targertPosition) {
         Position source = sourcePosition.toPosition();
@@ -69,6 +74,12 @@ public class ChessMatch {
         Piece p = board.removePiece(source);
         Piece capturedPiece = board.removePiece(targert);
         board.placePiece(p, targert);
+        
+        if(capturedPiece != null){
+            piecesOnTheBoard.remove(capturedPiece);
+            capturedPieces.add(capturedPiece);
+        }
+            
         return capturedPiece;
     }
 
@@ -76,28 +87,29 @@ public class ChessMatch {
         if (!board.thereIsAPiece(position)) {
             throw new ChessException("Nao existe peca na posicao de origem.");
         }
-        if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
+        if (currentPlayer != ((ChessPiece) board.piece(position)).getColor()) {
             throw new ChessException("A peca escolhida nao e sua.");
         }
-        if(!board.piece(position).isThereAnyPossibleMove()){
+        if (!board.piece(position).isThereAnyPossibleMove()) {
             throw new ChessException("Nao existe movimentos possiveis para a peca escolhida");
         }
     }
 
-    private void validateTargetPosition(Position source, Position target){
-        if(!board.piece(source).possibleMoves(target)){
+    private void validateTargetPosition(Position source, Position target) {
+        if (!board.piece(source).possibleMoves(target)) {
             throw new ChessException("A peca escolhida nao pode se mover para a posicao de destino");
         }
     }
-    
+
     //troca de turno
-    public void nextTurn(){
-        turn ++;
+    public void nextTurn() {
+        turn++;
         currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
     }
-    
+
     private void placeNewPiece(char column, int row, ChessPiece piece) {
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
+        piecesOnTheBoard.add(piece);
     }
 
     //Inicializador da partida colocando peças no tabuleiro
