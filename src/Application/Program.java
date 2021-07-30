@@ -14,9 +14,7 @@ import java.util.Scanner;
 public class Program {
 
     public static void main(String[] args) {
-        /*ChessMatch chessMatch = new ChessMatch();
-        UI.printBoard(chessMatch.getPieces());*/
-
+        
         Scanner scn = new Scanner(System.in);
         ChessMatch chessMatch = new ChessMatch();
 
