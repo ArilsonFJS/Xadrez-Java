@@ -14,6 +14,8 @@ import Chess.Color;
  *
  * @author arils
  */
+
+//Classe Peao
 public class Pawn extends ChessPiece {
 
     public Pawn(Board board, Color color) {
