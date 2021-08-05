@@ -44,6 +44,12 @@ public class Program {
                     captured.add(capturedPiece);
                 }
                 
+                if(chessMatch.getPromoted() != null){
+                    System.out.print("Entre com a peca para promocao (B/N/R/Q): ");
+                    String type = scn.nextLine();
+                    chessMatch.replacePromotedPiece(type);
+                }
+                
             } catch (ChessException e) {
                 System.out.println(e.getMessage());
                 scn.nextLine();
